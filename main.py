@@ -26,6 +26,8 @@ import commands
 from pysqlite2 import dbapi2 as sqlite
 import pango
 
+import classes
+
 ##########
 ##########
 class game:
@@ -388,7 +390,7 @@ class game:
 		dados = self.sqlCursor.fetchall()
 		model = self.treev.get_model()
 		for linha in dados:
-			model.append([linha[7], linha[1], linha[2], linha[3], linha[4], linha[5], linha[6], linha[0]])
+			model.append([linha[7], linha[1], linha[3], linha[2], linha[4], linha[5], linha[6], linha[0]])
 	##########
 	
 	
@@ -601,6 +603,158 @@ class game:
 		self.janelaAbout.quit()
 	##########
 	
+	
+	##########
+	### mostra a janela para adicionar mais tempo de jogo a um registro
+	def windowAddTempoShow(self, widget):
+		cod = self.pegaSelecaoTreev()
+		if cod == None:
+			self.mensagem('info', 'Nenhum registro selecionado')
+		else:
+			" Emcapsulando o .glade "
+			self.itfAddTempo = gtk.glade.XML('interfaceAddTempo.glade')
+			self.janelaAddTempo = self.itfAddTempo.get_widget('windowAddTempo')
+			usuario = self.itfAddTempo.get_widget('txtUsuario')
+			tempo = self.itfAddTempo.get_widget('txtTempo')
+			equipamento = self.itfAddTempo.get_widget('txtEquipamento')
+			hora = self.itfAddTempo.get_widget('txtHora')
+			horaTermino = self.itfAddTempo.get_widget('txtHoraTermino')
+			cbTempo = self.itfAddTempo.get_widget('cbTempo')
+			cbtPago = self.itfAddTempo.get_widget('cbtPago')
+			
+			self.itfAddTempo.signal_autoconnect(self)
+			self.janelaAddTempo.show_all()
+			
+			" Pegando os dados no DB "
+			sql = "SELECT * from aluguel WHERE codigo = %s" % (cod)
+			self.sqlCursor.execute(sql)
+			self.addTempoDados = self.sqlCursor.fetchall()
+			
+			for linha in self.addTempoDados:
+				usuario.props.text = linha[5]
+				hora.props.text = linha[1]
+				tempo.props.text = linha[3]
+				equipamento.props.text = linha[4]
+				horaTermino.props.text = linha[6]
+				
+				if linha[7] == 'SIM':
+					cbtPago.set_active(True)
+				else:
+					cbtPago.set_active(False)
+	##########
+	
+		### Adiciona mais tempo de jogo a um registro
+	def addTempo(self, widget):
+		txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
+		cbTempo = self.itfAddTempo.get_widget('cbTempo')
+		txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
+		cbtPago = self.itfAddTempo.get_widget('cbtPago')
+		
+		tempo = cbTempo.get_active()
+		horaTermino = txtHoraTermino.props.text
+		if cbtPago.get_active() == True:
+			pago = 'SIN'
+		else:
+			pago = 'NÃO'
+		for linha in self.addTempoDados:
+			cod = linha[0]
+			valor = linha[2] + self.valor
+		
+		" Acertando o formato do tempo "
+		tempo = valor / 2
+		tempo = tempo * 60
+		tempo = str(datetime.timedelta(minutes=tempo))
+		h, m ,r= tempo.split(':')
+		if h == '0' and m != '00':
+			tempo = m+' Minutos'
+		elif h == '1' and m == '00':
+			tempo = str(h)+' Hora'
+		elif h != '1' and m == '00':
+			tempo = str(h)+' Horas'
+		elif h == '1' and m != '00':
+			tempo = str(h)+' Hora e '+str(m)+' Minutos'
+		elif h != '1' and h != '0' and m != '00':
+			tempo = str(h)+' Horas e '+str(m)+' Minutos'
+		
+		
+		
+		sql = """UPDATE aluguel SET 
+		tempo = '%s', valor = '%s', pago = '%s', termino = '%s'
+		WHERE codigo = %s
+		"""  % (tempo, valor, pago, horaTermino, cod)
+		self.sqlCursor.execute(sql)
+		self.sqlConnect.commit()
+		self.janelaAddTempo.destroy()
+		
+		model = self.treev.get_model()
+		model.clear()
+		self.selectRegistros()
+	##########
+	
+	##########
+	### Calcula quando o tempo de jogo acabara para Add tempo
+	def addTempoCalcTermino(self, minutos, hora):
+		h, m = hora.split(':')
+		h = int(h)
+		m = int(m)
+		hora = str(datetime.timedelta(hours=h, minutes=m) + datetime.timedelta(minutes=minutos))
+		h, m, s = hora.split(':')
+		hora = h+':'+m
+		return hora
+	##########
+	
+	
+	##########
+	### Pega o tempo do para adicionar mais tempo ao registro
+	def addTempoPegaTempo(self, widget):
+		txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
+		cbTempo = self.itfAddTempo.get_widget('cbTempo')
+		tempo = cbTempo.get_active()
+		for linha in self.addTempoDados:
+			hora = linha[1]
+		if tempo == 0:
+			" 15 Minutos "
+			horaTermino = self.addTempoCalcTermino(15, hora)
+			self.valor = 0.50
+		elif tempo == 1:
+			" 30 Minutos "
+			horaTermino = self.addTempoCalcTermino(30, hora)
+			self.valor = 1.00
+		elif tempo == 2:
+			" 1 Hora "
+			horaTermino = self.addTempoCalcTermino(60, hora)
+			self.valor = 2.00
+		elif tempo == 3:
+			" 1 Hora e 30 minutos"
+			horaTermino = self.addTempoCalcTermino(90, hora)
+			self.valor = 3.00
+		elif tempo == 4:
+			" 2 Horas "
+			horaTermino = self.addTempoCalcTermino(120, hora)
+			self.valor = 4.00
+		elif tempo == 5:
+			" 2 horas e 30 minutos "
+			horaTermino = self.addTempoCalcTermino(150, hora)
+			self.valor = 5.00
+		elif tempo == 6:
+			" 3 Horas "
+			horaTermino = self.addTempoCalcTermino(180, hora)
+			self.valor = 6.00
+		elif tempo == 7:
+			" 4 Horas "
+			horaTermino = self.addTempoCalcTermino(240, hora)
+			self.valor = 8.00
+		elif tempo == 8:
+			" 5 Horas "
+			horaTermino = self.addTempoCalcTermino(300, hora)
+			self.valor = 10.00
+		elif tempo == 9:
+			" 6 Horas "
+			horaTermino = self.addTempoCalcTermino(360, hora)
+			self.valor = 12.00
+		
+		txtHoraTermino.props.text = horaTermino
+	##########
 	
 	
 	#########

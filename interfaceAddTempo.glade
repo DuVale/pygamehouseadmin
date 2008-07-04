@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Thu Jul  3 15:36:47 2008 -->
+<!--Generated with glade3 3.4.5 on Fri Jul  4 11:06:01 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="windowAddTempo">
     <property name="width_request">400</property>
@@ -139,7 +139,7 @@
 4 Horas
 5 Horas
 6 Horas</property>
-            <signal name="changed" handler="pegaTempoAddTempo"/>
+            <signal name="changed" handler="addTempoPegaTempo"/>
           </widget>
           <packing>
             <property name="x">180</property>
