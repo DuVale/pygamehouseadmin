@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.5 on Thu Jul  3 11:28:04 2008 -->
+<glade-interface>
+  <widget class="GtkAboutDialog" id="windowAbout">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Sobre o PyGameHouseAdmin</property>
+    <property name="resizable">False</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <property name="program_name">PyGameHouseAdmin</property>
+    <property name="version">0.1</property>
+    <property name="copyright" translatable="yes">Copyright © 2008-2008 Carlos Henrique Marques da Cunha Filho</property>
+    <property name="comments" translatable="yes">Um administrador de aluguel de Video-Games</property>
+    <property name="website">http://code.google.com/p/pygamehouseadmin/</property>
+    <property name="website_label" translatable="yes">http://code.google.com/p/pygamehouseadmin/</property>
+    <property name="license" translatable="yes">Este programa é um software livre; você pode redistribuí-lo e/ou modificá-lo
+sob os termos da GNU General Public License v3 (GPL3) como publicada pela
+Free Software Foundation.
+
+O PyGameHouseAdmin  é distribuído na esperança de que será útil,
+mas SEM NENHUMA GARANTIA; até mesmo sem a garantia implícita
+de COMERCIALIZAÇÃO ou de ADAPTAÇÃO A UM PROPÓSITO
+PARTICULAR. Veja a GNU General Public License v3 (GPL3) para mais detalhes.
+
+Caso queira uma cópia da GNU General Public License v3 (GPL3) escreva 
+para a Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.</property>
+    <property name="authors">Carlos Henrique Marques da Cunha Filho &lt;rickadt@gmail.com&gt;</property>
+    <property name="artists">Carlos Henrique Marques da Cunha Filho &lt;rickadt@gmail.com&gt;</property>
+    <signal name="close" handler="sairAbout"/>
+    <child internal-child="vbox">
+      <widget class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
