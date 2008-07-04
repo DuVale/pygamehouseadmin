@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.5 on Thu Jul  3 15:36:47 2008 -->
+<glade-interface>
+  <widget class="GtkWindow" id="windowAddTempo">
+    <property name="width_request">400</property>
+    <property name="height_request">300</property>
+    <property name="title" translatable="yes">Adicionar tempo</property>
+    <property name="resizable">False</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="skip_taskbar_hint">True</property>
+    <child>
+      <widget class="GtkFixed" id="fixed1">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkLabel" id="label1">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Usuário</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">20</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkEntry" id="txtUsuario">
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="editable">False</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">40</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label2">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Hora</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">90</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkEntry" id="txtHora">
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="editable">False</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">110</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label3">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Tempo</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">160</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkEntry" id="txtTempo">
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="editable">False</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label4">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Equipamento</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">230</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkEntry" id="txtEquipamento">
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="editable">False</property>
+          </widget>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">250</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label5">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Adicionar</property>
+          </widget>
+          <packing>
+            <property name="x">180</property>
+            <property name="y">20</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkComboBox" id="cbTempo">
+            <property name="width_request">180</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="items" translatable="yes">15 Minutos
+30 Minutos
+1 Hora
+1 Hora e 30 minutos
+2 Horas
+2 Horas e 30 minutos
+3 Horas
+4 Horas
+5 Horas
+6 Horas</property>
+            <signal name="changed" handler="pegaTempoAddTempo"/>
+          </widget>
+          <packing>
+            <property name="x">180</property>
+            <property name="y">40</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label6">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Hora do termino</property>
+          </widget>
+          <packing>
+            <property name="x">180</property>
+            <property name="y">90</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkEntry" id="txtHoraTermino">
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="editable">False</property>
+          </widget>
+          <packing>
+            <property name="x">180</property>
+            <property name="y">110</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkCheckButton" id="cbtPago">
+            <property name="width_request">100</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="label" translatable="yes">Pago</property>
+            <property name="response_id">0</property>
+            <property name="draw_indicator">True</property>
+          </widget>
+          <packing>
+            <property name="x">180</property>
+            <property name="y">160</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkButton" id="button1">
+            <property name="width_request">100</property>
+            <property name="height_request">40</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="label" translatable="yes">gtk-save</property>
+            <property name="use_stock">True</property>
+            <property name="response_id">0</property>
+            <signal name="clicked" handler="addTempo"/>
+          </widget>
+          <packing>
+            <property name="x">200</property>
+            <property name="y">220</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
