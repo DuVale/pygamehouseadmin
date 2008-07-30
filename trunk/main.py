@@ -39,6 +39,7 @@ class game:
 		
 		" Atribuindo os Widgets da interface a variaveis "
 		self.janela = self.itf.get_widget('windowMain')
+		self.janela.set_icon_from_file('icones/icone.png')
 		self.itf.signal_autoconnect(self)
 		self.treev = self.itf.get_widget('treeview')
 		self.txtHora = self.itf.get_widget('txtHora')
@@ -642,8 +643,7 @@ class game:
 				else:
 					cbtPago.set_active(False)
 	##########
-	
-		### Adiciona mais tempo de jogo a um registro
+	### Adiciona mais tempo de jogo a um registro
 	def addTempo(self, widget):
 		txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
 		cbTempo = self.itfAddTempo.get_widget('cbTempo')
@@ -659,6 +659,51 @@ class game:
 		for linha in self.addTempoDados:
 			cod = linha[0]
 			valor = linha[2] + self.valor
+		
+		" Acertando o formato do tempo "
+		tempo = valor / 2
+		tempo = tempo * 60
+		tempo = str(datetime.timedelta(minutes=tempo))
+		h, m ,r= tempo.split(':')
+		if h == '0' and m != '00':
+			tempo = m+' Minutos'
+		elif h == '1' and m == '00':
+			tempo = str(h)+' Hora'
+		elif h != '1' and m == '00':
+			tempo = str(h)+' Horas'
+		elif h == '1' and m != '00':
+			tempo = str(h)+' Hora e '+str(m)+' Minutos'
+		elif h != '1' and h != '0' and m != '00':
+			tempo = str(h)+' Horas e '+str(m)+' Minutos'
+		
+		
+		
+		sql = """UPDATE aluguel SET 
+		tempo = '%s', valor = '%s', pago = '%s', termino = '%s'
+		WHERE codigo = %s
+		"""  % (tempo, valor, pago, horaTermino, cod)
+		self.sqlCursor.execute(sql)
+		self.sqlConnect.commit()
+		self.janelaAddTempo.destroy()
+		
+		model = self.treev.get_model()
+		model.clear()
+		self.selectRegistros()
+	def addTempo2(self, widget):
+		#txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
+		cbTempo = self.itfAddTempo.get_widget('cbTempo')
+		cbtPago = self.itfAddTempo.get_widget('cbtPago')
+		
+		#tempo = cbTempo.get_active()
+		#horaTermino = txtHoraTermino.props.text
+		if cbtPago.get_active() == True:
+			pago = 'SIN'
+		else:
+			pago = 'NÃO'
+		for linha in self.addTempoDados:
+			cod = linha[0]
+			valor = linha[2] + self.valor
+			#horaTermino
 		
 		" Acertando o formato do tempo "
 		tempo = valor / 2
@@ -711,7 +756,7 @@ class game:
 		cbTempo = self.itfAddTempo.get_widget('cbTempo')
 		tempo = cbTempo.get_active()
 		for linha in self.addTempoDados:
-			hora = linha[1]
+			hora = linha[6]
 		if tempo == 0:
 			" 15 Minutos "
 			horaTermino = self.addTempoCalcTermino(15, hora)
