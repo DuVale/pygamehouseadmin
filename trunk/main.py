@@ -175,66 +175,67 @@ class game:
 			col = self.cbTempo.get_active()
 		else:
 			col = self.cbTempo.get_active()
+			hora = self.txtHora.props.text
 		
 		if col == 0:
 			" 15 Minutos "
 			self.txtValor.props.text = '0.50'
 			self.tempTEMPO = '15 Minutos'
-			self.horaTermino = self.calcTermino(15)
+			self.horaTermino = self.calcTermino(hora, 15)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino),
 		elif col == 1:
 			" 30 Minutos "
 			self.txtValor.props.text = '1.00'
 			self.tempTEMPO = '30 Minutos'
-			self.horaTermino = self.calcTermino(30)
+			self.horaTermino = self.calcTermino(hora, 30)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 2:
 			" 1 Hora "
 			self.txtValor.props.text = '2.00'
 			self.tempTEMPO = '1 Hora'
-			self.horaTermino = self.calcTermino(60)
+			self.horaTermino = self.calcTermino(hora, 60)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 3:
 			" 1 Hora e 30 minutos "
 			self.txtValor.props.text = '3.00'
 			self.tempTEMPO = '1 Hora e 30 minutos'
-			self.horaTermino = self.calcTermino(90)
+			self.horaTermino = self.calcTermino(hora, 90)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 4:
 			" 2 Horas "
 			self.txtValor.props.text = '4.00'
 			self.tempTEMPO = '2 Horas'
-			self.horaTermino = self.calcTermino(120)
+			self.horaTermino = self.calcTermino(hora, 120)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 5:
 			" 2 Horas e 30 minutos "
 			self.txtValor.props.text = '5.00'
 			self.tempTEMPO = '2 Horas e 30 minutos'
-			self.horaTermino = self.calcTermino(150)
+			self.horaTermino = self.calcTermino(hora, 150)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 6:
 			" 3 Horas "
 			self.txtValor.props.text = '6.00'
 			self.tempTEMPO = '3 Horas'
-			self.horaTermino = self.calcTermino(180)
+			self.horaTermino = self.calcTermino(hora, 180)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 7:
 			" 4 Horas "
 			self.txtValor.props.text = '8.00'
 			self.tempTEMPO = '4 Horas'
-			self.horaTermino = self.calcTermino(240)
+			self.horaTermino = self.calcTermino(hora, 240)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 8:
 			" 5 Horas "
 			self.txtValor.props.text = '10.00'
 			self.tempTEMPO = '5 Horas'
-			self.horaTermino = self.calcTermino(300)
+			self.horaTermino = self.calcTermino(hora, 300)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 		elif col == 9:
 			" 6 Horas "
 			self.txtValor.props.text = '12.00'
 			self.tempTEMPO = '6 Horas'
-			self.horaTermino = self.calcTermino(360)
+			self.horaTermino = self.calcTermino(hora, 360)
 			self.lbTermino.set_text('Hora do termino: '+self.horaTermino)
 	##########
 	
@@ -278,8 +279,7 @@ class game:
 	
 	##########
 	### Calcula quando o tempo de jogo acabara
-	def calcTermino(self, minutos):
-		hora = time.strftime('%H:%M')
+	def calcTermino(self, hora, minutos):
 		h, m = hora.split(':')
 		h = int(h)
 		m = int(m)
@@ -659,51 +659,6 @@ class game:
 		for linha in self.addTempoDados:
 			cod = linha[0]
 			valor = linha[2] + self.valor
-		
-		" Acertando o formato do tempo "
-		tempo = valor / 2
-		tempo = tempo * 60
-		tempo = str(datetime.timedelta(minutes=tempo))
-		h, m ,r= tempo.split(':')
-		if h == '0' and m != '00':
-			tempo = m+' Minutos'
-		elif h == '1' and m == '00':
-			tempo = str(h)+' Hora'
-		elif h != '1' and m == '00':
-			tempo = str(h)+' Horas'
-		elif h == '1' and m != '00':
-			tempo = str(h)+' Hora e '+str(m)+' Minutos'
-		elif h != '1' and h != '0' and m != '00':
-			tempo = str(h)+' Horas e '+str(m)+' Minutos'
-		
-		
-		
-		sql = """UPDATE aluguel SET 
-		tempo = '%s', valor = '%s', pago = '%s', termino = '%s'
-		WHERE codigo = %s
-		"""  % (tempo, valor, pago, horaTermino, cod)
-		self.sqlCursor.execute(sql)
-		self.sqlConnect.commit()
-		self.janelaAddTempo.destroy()
-		
-		model = self.treev.get_model()
-		model.clear()
-		self.selectRegistros()
-	def addTempo2(self, widget):
-		#txtHoraTermino = self.itfAddTempo.get_widget('txtHoraTermino')
-		cbTempo = self.itfAddTempo.get_widget('cbTempo')
-		cbtPago = self.itfAddTempo.get_widget('cbtPago')
-		
-		#tempo = cbTempo.get_active()
-		#horaTermino = txtHoraTermino.props.text
-		if cbtPago.get_active() == True:
-			pago = 'SIN'
-		else:
-			pago = 'NÃO'
-		for linha in self.addTempoDados:
-			cod = linha[0]
-			valor = linha[2] + self.valor
-			#horaTermino
 		
 		" Acertando o formato do tempo "
 		tempo = valor / 2
