@@ -1,0 +1,1 @@
+Este é um software pequeno e simples, para ajudar no gerenciamento de casas de games ou fliperamas, escrito em PyGTK, pode ser facilmente modificado para outros tipos de estabelecimento que trabalhe com um seguimento parecido, como sinucas, boliches, ou qualquer tipo de jogo ou equipamento alugado por tempo.
